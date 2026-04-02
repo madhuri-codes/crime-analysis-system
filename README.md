@@ -11,7 +11,6 @@ A full-stack web application for managing criminal records and analyzing crime d
 | Frontend | React.js (Vite) |
 | Backend | Node.js, Express.js |
 | Database | MySQL |
-| Version Control | Git & GitHub |
 
 ---
 
