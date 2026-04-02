@@ -26,7 +26,7 @@ crime-analysis-system/
 
 ---
 
-## 📊 Database Overview
+##  Database Overview
 
 The MySQL database consists of 17 tables covering:
 
@@ -40,7 +40,7 @@ The MySQL database consists of 17 tables covering:
 
 ---
 
-## ⚙️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js (v18+)
@@ -82,7 +82,7 @@ npm run dev
 
 ---
 
-## 👥 Team
+##  Team
 
 | Name | GitHub |
 |------|--------|
@@ -93,6 +93,6 @@ npm run dev
 
 ---
 
-## 📌 Status
+##  Status
 
 🚧 Under active development — DBMS course project.
