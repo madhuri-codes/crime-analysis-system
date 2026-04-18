@@ -88,7 +88,7 @@ npm run dev
 |------|--------|
 | Madhuri N | [@madhuri-codes](https://github.com/madhuri-codes) |
 | Neha Kamath | [@NehaK-XP](https://github.com/NehaK-XP) |
-| D Jahnavi | — |
+| D Jahnavi | [@jaanuC600](https://github.com/jaanuC600) |
 | Shanti | — |
 
 ---
