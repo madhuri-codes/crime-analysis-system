@@ -6,6 +6,7 @@ import criminalRoutes from './routes/criminals.js';
 import suspectRoutes from './routes/suspects.js';
 import victimRoutes from './routes/victims.js';
 import arrestRoutes from './routes/arrests.js';
+import reportRoutes from './routes/reportRoutes.js';
 
 
 import userRoutes from './routes/userRoutes.js';
@@ -24,6 +25,8 @@ app.use('/api/criminals', criminalRoutes);
 app.use('/api/suspects', suspectRoutes);
 app.use('/api/victims', victimRoutes);
 app.use('/api/arrests', arrestRoutes);
+app.use('/api/reports', reportRoutes);
+
 // test route
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running!' });
