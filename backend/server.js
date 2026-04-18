@@ -8,11 +8,17 @@ import victimRoutes from './routes/victims.js';
 import arrestRoutes from './routes/arrests.js';
 
 
+import userRoutes from './routes/userRoutes.js';
+import officerRoutes from './routes/officerRoutes.js';
+
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/api/user', userRoutes);
+app.use('/api/officers', officerRoutes);
 app.use('/auth', authRoutes);
 app.use('/api/criminals', criminalRoutes);
 app.use('/api/suspects', suspectRoutes);
