@@ -1,12 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
+// routes
 import authRoutes from './routes/authRoutes.js';
-import criminalRoutes from './routes/criminals.js';
-import suspectRoutes from './routes/suspects.js';
-import victimRoutes from './routes/victims.js';
-import arrestRoutes from './routes/arrests.js';
-import reportRoutes from './routes/reportRoutes.js';
+
+// middleware
+import { authMiddleware, authoriseRoles } from './middleware/authMiddleware.js';
+
+// routes
+// import criminalRoutes from './routes/criminals.js';
+// import suspectRoutes from './routes/suspects.js';
+// import victimRoutes from './routes/victims.js';
+// import arrestRoutes from './routes/arrests.js';
+// import reportRoutes from './routes/reportRoutes.js';
 
 
 import userRoutes from './routes/userRoutes.js';
@@ -20,16 +27,16 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/user', userRoutes);
 app.use('/api/officers', officerRoutes);
-app.use('/auth', authRoutes);
-app.use('/api/criminals', criminalRoutes);
-app.use('/api/suspects', suspectRoutes);
-app.use('/api/victims', victimRoutes);
-app.use('/api/arrests', arrestRoutes);
-app.use('/api/reports', reportRoutes);
+app.use('/api/auth', authRoutes);
+// app.use('/api/criminals', criminalRoutes);
+// app.use('/api/suspects', suspectRoutes);
+// app.use('/api/victims', victimRoutes);
+// app.use('/api/arrests', arrestRoutes);
+// app.use('/api/reports', reportRoutes);
 
 // test route
 app.get('/', (req, res) => {
-  res.json({ message: 'Server is running!' });
+  res.json({ message: `Server is running!`});
 });
 
 const PORT = process.env.PORT || 5000;

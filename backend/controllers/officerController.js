@@ -49,21 +49,24 @@ export const getOfficerCases = async (req, res) => {
 
 // ADD officer
 export const addOfficer = async (req, res) => {
-  try {
-    const {
+  const {
       officer_rank, badge_number, first_name,
       last_name, date_of_birth, gender,
       department, contact_number
     } = req.body;
 
-    await pool.query(
+  try {
+    const [result] = await pool.query(
       `INSERT INTO OFFICER 
        (officer_rank, badge_number, first_name, last_name, date_of_birth, gender, department, contact_number)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [officer_rank, badge_number, first_name, last_name,
        date_of_birth, gender, department, contact_number]
     );
-    res.status(201).json({ message: 'Officer added successfully' });
+    res.status(201).json({ 
+      message: 'Officer added successfully',
+      officer_id: result.insertId
+     });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

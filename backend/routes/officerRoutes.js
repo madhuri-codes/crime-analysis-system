@@ -5,13 +5,13 @@ import {
   getOfficerCases,
   addOfficer
 } from '../controllers/officerController.js';
-import authMiddleware from '../middleware/authMiddleware.js';
+import { authMiddleware, authoriseRoles } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 router.get('/', authMiddleware, getAllOfficers);
-router.get('/:id', authMiddleware, getOfficerById);
 router.get('/cases/:officerId', authMiddleware, getOfficerCases);
-router.post('/', authMiddleware, addOfficer);
+router.get('/:id', authMiddleware, getOfficerById);
+router.post('/addOfficer', authMiddleware, authoriseRoles('Admin'), addOfficer);
 
 export default router;

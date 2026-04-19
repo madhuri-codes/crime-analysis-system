@@ -5,13 +5,17 @@ import {
   updateProfile,
   changePassword
 } from '../controllers/userController.js';
-import authMiddleware from '../middleware/authMiddleware.js';
+import { authMiddleware, authoriseRoles} from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', authMiddleware, getAllUsers);
-router.get('/:id', authMiddleware, getUserById);
+// ADMIN routes only
+router.get('/', authMiddleware, authoriseRoles('Admin'), getAllUsers);
+router.get('/:id', authMiddleware, authoriseRoles('Admin'), getUserById);
+
+// routes open to all
+
 router.put('/updateprofile', authMiddleware, updateProfile);
-router.put('/changepassword', authMiddleware, changePassword);
+router.patch('/changepassword', authMiddleware, changePassword);
 
 export default router;
