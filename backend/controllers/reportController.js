@@ -79,3 +79,48 @@ export const getOfficerPerformance = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
+// Recent crimes for dashboard
+export const getRecentCrimes = async (req, res) => {
+  try {
+    const [crimes] = await pool.query(
+      `SELECT
+        c.crime_id,
+        DATE_FORMAT(c.crime_date, '%Y-%m-%d') AS crime_date,
+        TIME_FORMAT(c.crime_time, '%H:%i') AS crime_time,
+        ct.crime_type_name,
+        c.crime_description,
+        c.crime_status
+       FROM CRIME c
+       JOIN CRIME_TYPE ct ON c.crime_type_id = ct.crime_type_id
+       ORDER BY c.crime_date DESC, c.crime_time DESC
+       LIMIT 3`
+    );
+    res.json(crimes);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+// Dashboard stats
+export const getDashboardStats = async (req, res) => {
+  try {
+    const [crimes] = await pool.query('SELECT COUNT(*) as count FROM CRIME');
+    const [criminals] = await pool.query('SELECT COUNT(*) as count FROM CRIMINAL');
+    const [arrests] = await pool.query('SELECT COUNT(*) as count FROM ARREST');
+    const [evidence] = await pool.query('SELECT COUNT(*) as count FROM EVIDENCE');
+    const [suspects] = await pool.query('SELECT COUNT(*) as count FROM SUSPECT');
+    const [victims] = await pool.query('SELECT COUNT(*) as count FROM VICTIM');
+
+    res.json({
+      crimes: crimes[0].count,
+      criminals: criminals[0].count,
+      arrests: arrests[0].count,
+      evidence: evidence[0].count,
+      suspects: suspects[0].count,
+      victims: victims[0].count
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};

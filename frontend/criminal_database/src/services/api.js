@@ -79,6 +79,30 @@ export const criminalAPI = {
   updateCriminal: (id, data) => API.put(`/criminals/update/${id}`, data),
 };
 
+// Report endpoints
+export const reportAPI = {
+  createReport: (data) => API.post('/reports', data),
+  getReports: () => API.get('/reports'),
+  getAllReports: () => API.get('/reports/all'),
+  getDashboardStats: () => API.get('/reports/dashboard'),
+  getRecentCrimes: () => API.get('/reports/recent'),
+};
+
+// Evidence endpoints
+export const evidenceAPI = {
+  getEvidenceItems: () => API.get('/evidence'),
+};
+
+// Suspect endpoints
+export const suspectAPI = {
+  getSuspects: () => API.get('/suspects'),
+};
+
+// Victim endpoints
+export const victimAPI = {
+  getVictims: () => API.get('/victims'),
+};
+
 // Location endpoints
 export const locationAPI = {
   getLocations: () => API.get('/locations'),

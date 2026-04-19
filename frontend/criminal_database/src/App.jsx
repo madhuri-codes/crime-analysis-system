@@ -11,6 +11,11 @@ import ArrestDetail from "./pages/ArrestDetail";
 import Officers from "./pages/Officers";
 import Criminals from "./pages/Criminals";
 import Profile from "./pages/Profile";
+import Evidence from "./pages/Evidence";
+import Suspects from "./pages/Suspects";
+import Victims from "./pages/Victims";
+import Report from "./pages/Report";
+import Reports from "./pages/Reports";
 
 // Placeholder component for pages not built yet
 const ComingSoon = ({ page }) => (
@@ -52,11 +57,14 @@ export default function App() {
         <Route path="/crimes/:id" element={
           <ProtectedRoute><CrimeRecordDetail /></ProtectedRoute>
         } />
+        <Route path="/crimes/register" element={
+          <ProtectedRoute><Report /></ProtectedRoute>
+        } />
         <Route path="/suspects" element={
-          <ProtectedRoute><ComingSoon page="Suspects" /></ProtectedRoute>
+          <ProtectedRoute><Suspects /></ProtectedRoute>
         } />
         <Route path="/victims" element={
-          <ProtectedRoute><ComingSoon page="Victims" /></ProtectedRoute>
+          <ProtectedRoute><Victims /></ProtectedRoute>
         } />
         <Route path="/arrests" element={
           <ProtectedRoute><Arrests /></ProtectedRoute>
@@ -65,7 +73,7 @@ export default function App() {
           <ProtectedRoute><ArrestDetail /></ProtectedRoute>
         } />
         <Route path="/evidence" element={
-          <ProtectedRoute><ComingSoon page="Evidence" /></ProtectedRoute>
+          <ProtectedRoute><Evidence /></ProtectedRoute>
         } />
         <Route path="/officers" element={
           <ProtectedRoute><Officers /></ProtectedRoute>
@@ -77,7 +85,7 @@ export default function App() {
           <ProtectedRoute><CrimeMap /></ProtectedRoute>
         } />
         <Route path="/reports" element={
-          <ProtectedRoute><ComingSoon page="Reports" /></ProtectedRoute>
+          <ProtectedRoute><Reports /></ProtectedRoute>
         } />
         <Route path="/profile" element={
           <ProtectedRoute><Profile /></ProtectedRoute>

@@ -5,6 +5,15 @@ export default function Header({ user, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    if (typeof onLogout === "function") {
+      onLogout();
+    }
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
     <header style={{
       position: "fixed", top: 0, left: 260, right: 0, height: 64,
@@ -80,12 +89,7 @@ export default function Header({ user, onLogout }) {
               borderRadius: 10, overflow: "hidden", zIndex: 200,
               boxShadow: "0 8px 32px rgba(0,0,0,0.4)"
             }}>
-              <button onClick={() => { navigate("/profile"); setDropdownOpen(false); }}
-                style={dropdownItemStyle}>
-                👤 My Profile
-              </button>
-              <div style={{ height: 1, background: "#334155" }} />
-              <button onClick={onLogout} style={{ ...dropdownItemStyle, color: "#f87171" }}>
+              <button onClick={handleLogout} style={{ ...dropdownItemStyle, color: "#f87171" }}>
                 🚪 Logout
               </button>
             </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
+import { reportAPI } from "../services/api";
 
 const statCards = [
   { label: "Total Crimes", icon: "🗂️", key: "crimes", color: "#3b82f6", path: "/crimes" },
@@ -13,28 +14,44 @@ const statCards = [
 
 const quickLinks = [
   { label: "Register FIR", icon: "📝", path: "/crimes/register", color: "#3b82f6" },
-  { label: "Add Criminal", icon: "➕", path: "/criminals/add", color: "#f59e0b" },
   { label: "View Crime Map", icon: "🗺️", path: "/map", color: "#22c55e" },
-  { label: "Generate Report", icon: "📈", path: "/reports", color: "#8b5cf6" },
 ];
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [stats, setStats] = useState({
+    crimes: 0, criminals: 0,
+    arrests: 0, evidence: 0,
+    suspects: 0, victims: 0
+  });
+  const [recentCrimes, setRecentCrimes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Placeholder stats - replace with real API calls later
-  const stats = {
-    crimes: 142, criminals: 89,
-    arrests: 67, evidence: 234,
-    suspects: 45, victims: 118
-  };
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [statsResponse, recentResponse] = await Promise.all([
+          reportAPI.getDashboardStats(),
+          reportAPI.getRecentCrimes(),
+        ]);
+
+        setStats(statsResponse.data);
+        setRecentCrimes(recentResponse.data);
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    localStorage.setItem("token", "test")
-    localStorage.setItem("user", JSON.stringify({username: "Guest User", user_type: "Civilian"}))
-
+    navigate("/login");
   };
 
   return (
@@ -117,7 +134,7 @@ export default function Dashboard() {
         }}>
           QUICK ACTIONS
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: 12 }}>
           {quickLinks.map((link) => (
             <button
               key={link.path}
@@ -146,7 +163,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Recent Activity placeholder */}
+      {/* Recent Activity */}
       <div style={{
         background: "#1e293b", borderRadius: 14, padding: "24px",
         border: "1px solid #334155"
@@ -157,35 +174,45 @@ export default function Dashboard() {
         }}>
           RECENT CRIMES
         </div>
-        {[1, 2, 3].map((i) => (
-          <div key={i} style={{
-            display: "flex", alignItems: "center", gap: 14,
-            padding: "12px 0",
-            borderBottom: i < 3 ? "1px solid #1e293b" : "none"
-          }}>
-            <div style={{
-              width: 36, height: 36, borderRadius: 8,
-              background: "#0f172a", display: "flex",
-              alignItems: "center", justifyContent: "center", fontSize: 14
+        {loading ? (
+          <div style={{ color: '#94a3b8' }}>Loading recent crimes...</div>
+        ) : recentCrimes.length === 0 ? (
+          <div style={{ color: '#64748b' }}>No recent crime records available.</div>
+        ) : (
+          recentCrimes.map((crime, index) => (
+            <div key={crime.crime_id} style={{
+              display: "flex", alignItems: "center", gap: 14,
+              padding: "12px 0",
+              borderBottom: index < recentCrimes.length - 1 ? "1px solid #1e293b" : "none"
             }}>
-              🗂️
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ color: "#cbd5e1", fontSize: 13, fontWeight: 500 }}>
-                Crime Record #{1000 + i}
+              <div style={{
+                width: 36, height: 36, borderRadius: 8,
+                background: "#0f172a", display: "flex",
+                alignItems: "center", justifyContent: "center", fontSize: 14
+              }}>
+                🗂️
               </div>
-              <div style={{ color: "#475569", fontSize: 12 }}>
-                Connect API to show real data
+              <div style={{ flex: 1 }}>
+                <button
+                  onClick={() => navigate(`/crimes/${crime.crime_id}`)}
+                  style={{
+                    background: 'none', border: 'none', padding: 0,
+                    color: '#e2e8f0', fontSize: 14, fontWeight: 600,
+                    cursor: 'pointer', textAlign: 'left'
+                  }}
+                >
+                  Crime #{crime.crime_id}
+                </button>
+                <div style={{ color: "#94a3b8", fontSize: 12, marginTop: 4 }}>
+                  {crime.crime_type_name} · {crime.crime_date}{crime.crime_time ? ` · ${crime.crime_time}` : ''}
+                </div>
+                <div style={{ color: "#64748b", fontSize: 12, marginTop: 6, whiteSpace: 'pre-wrap' }}>
+                  {crime.crime_description || 'No description provided.'}
+                </div>
               </div>
             </div>
-            <div style={{
-              background: "rgba(59,130,246,0.1)", color: "#60a5fa",
-              padding: "4px 10px", borderRadius: 20, fontSize: 11
-            }}>
-              Active
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </Layout>
   );
