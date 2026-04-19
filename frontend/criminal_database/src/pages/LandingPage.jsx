@@ -75,7 +75,7 @@ export default function LandingPage() {
             Login
           </button>
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/signup")}
             style={{
               background: "#3b82f6", border: "none",
               color: "white", padding: "8px 20px", borderRadius: 8,
