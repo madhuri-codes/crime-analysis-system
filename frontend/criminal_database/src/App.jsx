@@ -6,8 +6,11 @@ import SignupPage from "./pages/SignupPage";
 import CrimeMap from "./pages/CrimeMap";
 import CrimeRecords from "./pages/CrimeRecords";
 import CrimeRecordDetail from "./pages/CrimeRecordDetail";
+import Arrests from "./pages/Arrests";
+import ArrestDetail from "./pages/ArrestDetail";
 import Officers from "./pages/Officers";
 import Criminals from "./pages/Criminals";
+import Profile from "./pages/Profile";
 
 // Placeholder component for pages not built yet
 const ComingSoon = ({ page }) => (
@@ -56,7 +59,10 @@ export default function App() {
           <ProtectedRoute><ComingSoon page="Victims" /></ProtectedRoute>
         } />
         <Route path="/arrests" element={
-          <ProtectedRoute><ComingSoon page="Arrests" /></ProtectedRoute>
+          <ProtectedRoute><Arrests /></ProtectedRoute>
+        } />
+        <Route path="/arrests/:id" element={
+          <ProtectedRoute><ArrestDetail /></ProtectedRoute>
         } />
         <Route path="/evidence" element={
           <ProtectedRoute><ComingSoon page="Evidence" /></ProtectedRoute>
@@ -74,7 +80,7 @@ export default function App() {
           <ProtectedRoute><ComingSoon page="Reports" /></ProtectedRoute>
         } />
         <Route path="/profile" element={
-          <ProtectedRoute><ComingSoon page="Profile" /></ProtectedRoute>
+          <ProtectedRoute><Profile /></ProtectedRoute>
         } />
 
         {/* Default redirect */}

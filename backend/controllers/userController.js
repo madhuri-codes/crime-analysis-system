@@ -85,3 +85,57 @@ export const changePassword = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// GET user profile with stats for officers
+export const getProfile = async (req, res) => {
+  try {
+    const userId = req.user.user_id;
+
+    // Get user data with officer details if applicable
+    const [user] = await pool.query(`
+      SELECT 
+        u.user_id, 
+        u.username, 
+        u.email, 
+        u.user_type, 
+        u.officer_id,
+        o.first_name, 
+        o.last_name,
+        o.badge_number,
+        o.officer_rank,
+        o.station_id
+      FROM USER u
+      LEFT JOIN OFFICER o ON u.officer_id = o.officer_id
+      WHERE u.user_id = ?
+    `, [userId]);
+
+    if (user.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const profile = user[0];
+
+    // Add stats for officers
+    if (profile.user_type === 'Officer') {
+      // Crimes involved
+      const [crimes] = await pool.query(
+        'SELECT COUNT(*) as count FROM OFFICER_CRIME WHERE officer_id = ?',
+        [profile.officer_id]
+      );
+      profile.crimesInvolved = crimes[0].count;
+
+      // Criminals arrested (distinct criminals from crimes the officer was involved in)
+      const [arrests] = await pool.query(`
+        SELECT COUNT(DISTINCT cs.criminal_id) as count 
+        FROM CRIME_SUSPECT cs 
+        JOIN OFFICER_CRIME oc ON cs.crime_id = oc.crime_id 
+        WHERE oc.officer_id = ?
+      `, [profile.officer_id]);
+      profile.criminalsArrested = arrests[0].count;
+    }
+
+    res.json(profile);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};

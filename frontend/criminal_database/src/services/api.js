@@ -66,6 +66,12 @@ export const crimeAPI = {
   getCrimeById: (id) => API.get(`/crimes/${id}`),
 };
 
+// Arrest endpoints
+export const arrestAPI = {
+  getArrests: () => API.get('/arrests'),
+  getArrestById: (id) => API.get(`/arrests/${id}`),
+};
+
 // Criminal endpoints
 export const criminalAPI = {
   getCriminals: () => API.get('/criminals'),

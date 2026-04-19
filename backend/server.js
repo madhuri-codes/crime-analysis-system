@@ -21,6 +21,7 @@ import officerRoutes from './routes/officerRoutes.js';
 import locationRoutes from './routes/locationRoutes.js';
 import criminalRoutes from './routes/criminalRoutes.js';
 import crimeRoutes from './routes/crimeRoutes.js';
+import arrestRoutes from './routes/arrestRoutes.js';
 
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use('/api/officers', officerRoutes);
 app.use('/api/locations', locationRoutes);
 app.use('/api/criminals', criminalRoutes);
 app.use('/api/crimes', crimeRoutes);
+app.use('/api/arrests', arrestRoutes);
 app.use('/api/auth', authRoutes);
 // app.use('/api/suspects', suspectRoutes);
 // app.use('/api/victims', victimRoutes);
