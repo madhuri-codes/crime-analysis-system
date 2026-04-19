@@ -33,7 +33,7 @@ export default function Dashboard() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.setItem("token", "test")
-    localStorage.setItem("user", JSON.stringify({username: "Madhuri", user_type: "Admin"}))
+    localStorage.setItem("user", JSON.stringify({username: "Guest User", user_type: "Civilian"}))
 
   };
 
@@ -54,14 +54,14 @@ export default function Dashboard() {
           Welcome back,
         </div>
         <div style={{ color: "#e2e8f0", fontSize: 26, fontWeight: 700, marginBottom: 8 }}>
-          {user?.username || "Officer"} 👋
+          {user?.username || "Guest"} 👋
         </div>
         <div style={{
           display: "inline-block", background: "rgba(59,130,246,0.2)",
           color: "#60a5fa", padding: "4px 12px", borderRadius: 20,
           fontSize: 12, border: "1px solid rgba(59,130,246,0.3)"
         }}>
-          {user?.user_type || "Officer"}
+          {user?.user_type || "Civilian"}
         </div>
       </div>
 

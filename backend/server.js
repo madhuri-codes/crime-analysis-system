@@ -18,6 +18,9 @@ import { authMiddleware, authoriseRoles } from './middleware/authMiddleware.js';
 
 import userRoutes from './routes/userRoutes.js';
 import officerRoutes from './routes/officerRoutes.js';
+import locationRoutes from './routes/locationRoutes.js';
+import criminalRoutes from './routes/criminalRoutes.js';
+import crimeRoutes from './routes/crimeRoutes.js';
 
 
 dotenv.config();
@@ -27,8 +30,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/user', userRoutes);
 app.use('/api/officers', officerRoutes);
+app.use('/api/locations', locationRoutes);
+app.use('/api/criminals', criminalRoutes);
+app.use('/api/crimes', crimeRoutes);
 app.use('/api/auth', authRoutes);
-// app.use('/api/criminals', criminalRoutes);
 // app.use('/api/suspects', suspectRoutes);
 // app.use('/api/victims', victimRoutes);
 // app.use('/api/arrests', arrestRoutes);

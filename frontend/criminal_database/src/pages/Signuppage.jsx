@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { authAPI } from "../services/api";
 
-const userTypes = ["Admin", "Officer", "Investigator", "Analyst"];
+const userTypes = ["Civilian", "Officer", "Admin"];
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -50,12 +50,18 @@ export default function SignupPage() {
       setError("Password must be at least 6 characters");
       return;
     }
+    
+    // Check if Officer or Admin role requires officer_id
+    if ((form.user_type === 'Officer' || form.user_type === 'Admin') && !form.officer_id) {
+      setError("Officer ID is required for police accounts");
+      return;
+    }
 
     setLoading(true);
     setError("");
 
     try {
-      await axios.post("http://localhost:5000/auth/register", {
+      await authAPI.signup({
         username: form.username,
         email: form.email,
         password: form.password,
@@ -281,13 +287,13 @@ export default function SignupPage() {
             </div>
 
             <div style={{ marginBottom: 32 }}>
-              <label style={labelStyle}>OFFICER ID <span style={{ color: "#334155" }}>(optional)</span></label>
+              <label style={labelStyle}>OFFICER ID <span style={{ color: "#334155" }}>(required for Officer/Admin)</span></label>
               <input
                 type="number"
                 name="officer_id"
                 value={form.officer_id}
                 onChange={handleChange}
-                placeholder="Leave blank if not an officer"
+                placeholder="Only required if registering as Officer or Admin"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "#3b82f6"}
                 onBlur={e => e.target.style.borderColor = "#1e293b"}

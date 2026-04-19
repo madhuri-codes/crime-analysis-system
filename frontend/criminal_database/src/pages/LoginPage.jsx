@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { authAPI } from "../services/api";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -20,12 +20,14 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:5000/auth/login", form);
+      const res = await authAPI.login(form);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      console.error("Login error details:", err);
+      const errorMsg = err.response?.data?.message || err.message || "Login failed. Please try again.";
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

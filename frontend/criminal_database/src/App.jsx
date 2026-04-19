@@ -3,6 +3,11 @@ import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import CrimeMap from "./pages/CrimeMap";
+import CrimeRecords from "./pages/CrimeRecords";
+import CrimeRecordDetail from "./pages/CrimeRecordDetail";
+import Officers from "./pages/Officers";
+import Criminals from "./pages/Criminals";
 
 // Placeholder component for pages not built yet
 const ComingSoon = ({ page }) => (
@@ -39,10 +44,10 @@ export default function App() {
           <ProtectedRoute><Dashboard /></ProtectedRoute>
         } />
         <Route path="/crimes" element={
-          <ProtectedRoute><ComingSoon page="Crime Records" /></ProtectedRoute>
+          <ProtectedRoute><CrimeRecords /></ProtectedRoute>
         } />
-        <Route path="/criminals" element={
-          <ProtectedRoute><ComingSoon page="Criminals" /></ProtectedRoute>
+        <Route path="/crimes/:id" element={
+          <ProtectedRoute><CrimeRecordDetail /></ProtectedRoute>
         } />
         <Route path="/suspects" element={
           <ProtectedRoute><ComingSoon page="Suspects" /></ProtectedRoute>
@@ -57,10 +62,13 @@ export default function App() {
           <ProtectedRoute><ComingSoon page="Evidence" /></ProtectedRoute>
         } />
         <Route path="/officers" element={
-          <ProtectedRoute><ComingSoon page="Officers" /></ProtectedRoute>
+          <ProtectedRoute><Officers /></ProtectedRoute>
+        } />
+        <Route path="/criminals" element={
+          <ProtectedRoute><Criminals /></ProtectedRoute>
         } />
         <Route path="/map" element={
-          <ProtectedRoute><ComingSoon page="Crime Map" /></ProtectedRoute>
+          <ProtectedRoute><CrimeMap /></ProtectedRoute>
         } />
         <Route path="/reports" element={
           <ProtectedRoute><ComingSoon page="Reports" /></ProtectedRoute>
