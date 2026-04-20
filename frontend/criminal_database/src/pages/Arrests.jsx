@@ -9,7 +9,6 @@ export default function Arrests() {
   const [error, setError] = useState("");
   const [filters, setFilters] = useState({
     officer: "",
-    suspect: "",
     crimeType: "",
     date: "",
   });
@@ -34,10 +33,9 @@ export default function Arrests() {
   const filteredArrests = useMemo(() => {
     return arrests.filter((arrest) => {
       const officerMatch = arrest.officer_name?.toLowerCase().includes(filters.officer.toLowerCase());
-      const suspectMatch = arrest.suspect_name?.toLowerCase().includes(filters.suspect.toLowerCase());
       const crimeMatch = arrest.crime_type?.toLowerCase().includes(filters.crimeType.toLowerCase());
       const dateMatch = filters.date ? arrest.arrest_date === filters.date : true;
-      return officerMatch && suspectMatch && crimeMatch && dateMatch;
+      return officerMatch && crimeMatch && dateMatch;
     });
   }, [filters, arrests]);
 
@@ -52,7 +50,7 @@ export default function Arrests() {
         <div>
           <h1 style={{ margin: 0, color: "#e2e8f0" }}>Arrest Records</h1>
           <p style={{ margin: "8px 0 0", color: "#94a3b8" }}>
-            Search arrest records by officer, suspect, crime type, or arrest date.
+            Search arrest records by officer, crime type, or arrest date.
           </p>
         </div>
         <button
@@ -71,7 +69,7 @@ export default function Arrests() {
       </div>
 
       {showFilters && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 16, marginBottom: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 16, marginBottom: 24 }}>
           <label style={{ display: "flex", flexDirection: "column", gap: 8, color: "#94a3b8" }}>
             Officer
             <input
@@ -79,16 +77,6 @@ export default function Arrests() {
               value={filters.officer}
               onChange={handleFilterChange}
               placeholder="Search officer"
-              style={{ padding: 12, borderRadius: 10, border: "1px solid #334155", background: "#0f172a", color: "#e2e8f0" }}
-            />
-          </label>
-          <label style={{ display: "flex", flexDirection: "column", gap: 8, color: "#94a3b8" }}>
-            Suspect
-            <input
-              name="suspect"
-              value={filters.suspect}
-              onChange={handleFilterChange}
-              placeholder="Search suspect"
               style={{ padding: 12, borderRadius: 10, border: "1px solid #334155", background: "#0f172a", color: "#e2e8f0" }}
             />
           </label>

@@ -3,17 +3,15 @@ import { useState, useEffect } from "react";
 
 const features = [
   { icon: "🗂️", title: "Crime Records", desc: "Register and manage FIRs with full case details" },
-  { icon: "🔒", title: "Criminal Profiles", desc: "Track criminals across multiple cases and arrests" },
   { icon: "🧪", title: "Evidence Management", desc: "Log, track and store all crime evidence securely" },
   { icon: "🗺️", title: "Crime Mapping", desc: "GIS-based hotspot maps with location analytics" },
-  { icon: "📈", title: "Crime Analysis", desc: "Dashboards, trends and repeat offender reports" },
-  { icon: "👮", title: "Officer Management", desc: "Assign officers to cases and track performance" },
+  { icon: "📈", title: "Crime Analysis", desc: "Dashboard shows crime stats" },
+  { icon: "👮", title: "Officer Management", desc: "View officer details" },
 ];
 
 const stats = [
   { value: "17", label: "Database Tables" },
   { value: "26", label: "Relationships" },
-  { value: "10+", label: "Modules" },
   { value: "3NF", label: "Normalized" },
 ];
 
@@ -118,7 +116,7 @@ export default function LandingPage() {
             width: 6, height: 6, borderRadius: "50%",
             background: "#22c55e", boxShadow: "0 0 6px #22c55e"
           }} />
-          NITK CS254 — DBMS Project 2024
+          NITK CS254 — DBMS Project 2026
         </div>
 
         {/* Heading */}
@@ -284,7 +282,7 @@ export default function LandingPage() {
           display: "flex", gap: 16, justifyContent: "center",
           flexWrap: "wrap"
         }}>
-          {["⚛️ React.js", "🟢 Node.js", "🚂 Express.js", "🐬 MySQL", "🔐 JWT Auth", "🎨 Tailwind CSS"].map((tech) => (
+          {["⚛️ React.js", "🟢 Node.js", "🚂 Express.js", "🐬 MySQL", "🔐 JWT Auth"].map((tech) => (
             <div key={tech} style={{
               background: "#0f172a", border: "1px solid #1e293b",
               borderRadius: 8, padding: "8px 18px",
@@ -304,7 +302,7 @@ export default function LandingPage() {
         alignItems: "center", flexWrap: "wrap", gap: 12
       }}>
         <div style={{ color: "#334155", fontSize: 12 }}>
-          © 2024 CrimeBase — NITK Surathkal | CS254 DBMS Project
+          © 2026 CrimeBase — NITK Surathkal | CS254 DBMS Project
         </div>
         <div style={{ color: "#334155", fontSize: 12 }}>
           Aluri Shanthi · D Jahnavi · Madhuri Nallaboyina · Neha Kamath

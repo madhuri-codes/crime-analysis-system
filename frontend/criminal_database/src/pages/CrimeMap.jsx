@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { locationAPI } from "../services/api";
+import Layout from "../components/Layout";
 import "../App.css";
 import markerIconUrl from "leaflet/dist/images/marker-icon.png";
 import markerRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
@@ -87,53 +88,57 @@ export default function CrimeMap() {
     return null;
   }
 
-  return (
-    <div>
-      <div style={{ marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div>
-          <h1 style={{ color: "#e2e8f0", margin: 0 }}>Crime Map</h1>
-          <p style={{ color: "#94a3b8", margin: "8px 0 0" }}>
-            Visualize crime locations loaded from the database.
-          </p>
-        </div>
-      </div>
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-      {loading ? (
-        <div style={{ color: "#94a3b8" }}>Loading map locations...</div>
-      ) : error ? (
-        <div style={{ color: "#f87171" }}>{error}</div>
-      ) : (
-        <div style={{ height: "calc(100vh - 210px)", borderRadius: 16, overflow: "hidden", border: "1px solid #334155" }}>
-          <MapContainer center={center} zoom={zoomLevel} style={{ height: "100%", width: "100%" }}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <RecenterMap position={center} />
-            {safeLocations.map((location) => (
-              <Marker
-                key={location.location_id}
-                position={[location.latitude, location.longitude]}
-                icon={selectedLocation && String(location.location_id) === String(selectedLocation.location_id) ? selectedIcon : defaultIcon}
-              >
-                <Popup>
-                  <div style={{ fontSize: 13, lineHeight: 1.5 }}>
-                    <strong>Location ID:</strong> {location.location_id}
-                    <br />
-                    <strong>Address:</strong> {location.address1 || "N/A"}
-                    {location.address2 ? <><br />{location.address2}</> : null}
-                    {location.address3 ? <><br />{location.address3}</> : null}
-                    <br />
-                    {location.district}, {location.city}, {location.state}
-                    <br />
-                    {location.country} — {location.pincode}
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+  return (
+    <Layout user={user}>
+      <div style={{ width: '100%', maxWidth: '100%', margin: '0 auto' }}>
+        <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <h1 style={{ color: '#e2e8f0', margin: 0 }}>Crime Map</h1>
+            <p style={{ color: '#94a3b8', margin: '8px 0 0', maxWidth: 720, lineHeight: 1.75 }}>
+              Visualize crime locations loaded from the database.
+            </p>
+          </div>
         </div>
-      )}
-    </div>
+
+        {loading ? (
+          <div style={{ color: '#94a3b8' }}>Loading map locations...</div>
+        ) : error ? (
+          <div style={{ color: '#f87171' }}>{error}</div>
+        ) : (
+          <div style={{ borderRadius: 16, overflow: 'hidden', border: '1px solid #334155', minHeight: 560, background: '#0f172a' }}>
+            <MapContainer center={center} zoom={zoomLevel} style={{ minHeight: 560, width: '100%' }}>
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <RecenterMap position={center} />
+              {safeLocations.map((location) => (
+                <Marker
+                  key={location.location_id}
+                  position={[location.latitude, location.longitude]}
+                  icon={selectedLocation && String(location.location_id) === String(selectedLocation.location_id) ? selectedIcon : defaultIcon}
+                >
+                  <Popup>
+                    <div style={{ fontSize: 13, lineHeight: 1.5 }}>
+                      <strong>Location ID:</strong> {location.location_id}
+                      <br />
+                      <strong>Address:</strong> {location.address1 || 'N/A'}
+                      {location.address2 ? <><br />{location.address2}</> : null}
+                      {location.address3 ? <><br />{location.address3}</> : null}
+                      <br />
+                      {location.district}, {location.city}, {location.state}
+                      <br />
+                      {location.country} — {location.pincode}
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </div>
+        )}
+      </div>
+    </Layout>
   );
 }

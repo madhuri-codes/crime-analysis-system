@@ -67,8 +67,8 @@ export default function Report() {
 
   return (
     <Layout user={user}>
-      <div style={{ maxWidth: 860, margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, marginBottom: 28 }}>
+      <div style={{ width: '100%', maxWidth: '100%', margin: '0 auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, marginBottom: 28, flexWrap: 'wrap' }}>
           <div>
             <h1 style={{ color: '#e2e8f0', fontSize: 32, marginBottom: 8 }}>Register FIR</h1>
             <p style={{ color: '#94a3b8', maxWidth: 620, lineHeight: 1.7 }}>

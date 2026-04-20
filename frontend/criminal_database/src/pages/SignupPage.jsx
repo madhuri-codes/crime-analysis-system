@@ -203,7 +203,7 @@ export default function SignupPage() {
           position: "absolute", bottom: 32,
           color: "#334155", fontSize: 12, textAlign: "center"
         }}>
-          NITK Surathkal · CS254 DBMS Project · 2024
+          NITK Surathkal · CS254 DBMS Project · 2026
         </div>
       </div>
 
@@ -263,7 +263,7 @@ export default function SignupPage() {
                 name="username"
                 value={form.username}
                 onChange={handleChange}
-                placeholder="e.g. officer_madhuri"
+                placeholder="e.g. officer_name"
                 required
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "#3b82f6"}

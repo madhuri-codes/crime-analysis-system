@@ -105,7 +105,7 @@ export default function LoginPage() {
           position: "absolute", bottom: 32,
           color: "#334155", fontSize: 12, textAlign: "center"
         }}>
-          NITK Surathkal · CS254 DBMS Project · 2024
+          NITK Surathkal · CS254 DBMS Project · 2026
         </div>
       </div>
 

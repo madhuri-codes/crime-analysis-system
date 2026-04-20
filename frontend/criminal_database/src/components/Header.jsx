@@ -37,18 +37,6 @@ export default function Header({ user, onLogout }) {
 
       {/* Right - User info */}
       <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-        {/* Notification bell */}
-        <button style={{
-          background: "none", border: "none", cursor: "pointer",
-          color: "#64748b", fontSize: 18, padding: 8,
-          borderRadius: 8, transition: "color 0.2s"
-        }}
-          onMouseOver={e => e.target.style.color = "#e2e8f0"}
-          onMouseOut={e => e.target.style.color = "#64748b"}
-        >
-          🔔
-        </button>
-
         {/* User badge */}
         <div style={{ position: "relative" }}>
           <button

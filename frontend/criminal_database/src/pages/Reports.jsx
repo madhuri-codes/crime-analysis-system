@@ -30,7 +30,7 @@ export default function Reports() {
 
   return (
     <Layout user={user}>
-      <div style={{ maxWidth: 1120, margin: '0 auto' }}>
+      <div style={{ width: '100%', maxWidth: '100%', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 24, marginBottom: 28, flexWrap: 'wrap' }}>
           <div>
             <h1 style={{ color: '#e2e8f0', fontSize: 32, marginBottom: 8 }}>
@@ -54,8 +54,18 @@ export default function Reports() {
         ) : error ? (
           <div style={{ color: '#f87171' }}>{error}</div>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <div style={{ overflowX: 'auto', width: '100%' }}>
+            <table style={{ width: '100%', minWidth: 980, borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+              <colgroup>
+                <col style={{ width: '8%' }} />
+                <col style={{ width: '10%' }} />
+                <col style={{ width: '15%' }} />
+                <col style={{ width: '15%' }} />
+                <col style={{ width: '25%' }} />
+                <col style={{ width: '12%' }} />
+                <col style={{ width: '10%' }} />
+                <col style={{ width: '10%' }} />
+              </colgroup>
               <thead>
                 <tr>
                   <th style={thStyle}>Report ID</th>
@@ -78,8 +88,8 @@ export default function Reports() {
                     <td style={tdStyle}>{report.report_id}</td>
                     <td style={tdStyle}>{report.report_status}</td>
                     <td style={tdStyle}>{new Date(report.reported_at).toLocaleString()}</td>
-                    <td style={tdStyle}>{isAdmin ? report.reporter : report.notes}</td>
-                    <td style={tdStyle}>{report.notes}</td>
+                    <td style={detailsTdStyle}>{isAdmin ? report.reporter : report.notes}</td>
+                    <td style={notesTdStyle}>{report.notes}</td>
                     <td style={tdStyle}>{report.reviewed_by_name || '—'}</td>
                     <td style={tdStyle}>{report.reviewed_at ? new Date(report.reviewed_at).toLocaleString() : '—'}</td>
                     <td style={tdStyle}>{report.rejection_reason || '—'}</td>
@@ -110,6 +120,17 @@ const tdStyle = {
   verticalAlign: 'top',
   fontSize: 13,
   whiteSpace: 'pre-wrap',
+  wordBreak: 'break-word',
+};
+
+const detailsTdStyle = {
+  ...tdStyle,
+  maxWidth: 180,
+};
+
+const notesTdStyle = {
+  ...tdStyle,
+  maxWidth: 260,
 };
 
 const rowStyle = {
